@@ -7,7 +7,9 @@ A documentation site for design systems that automatically extracts CSS document
 ## Features
 
 * **Vite + Vue 3 + TypeScript** - Modern development stack
-* **MDX Support** - Write docs in Markdown with embedded Vue components
+* **MDX Support** - Write docs in Markdown with embedded Vue components.  Supports Github Markdown.
+* **Live Code Examples** - Interactive, editable Vue components with vue-live integration
+* **GitHub Pages Deployment** - Automatic publishing via GitHub Actions
 * **Automatic CSS Documentation** - JSDoc-style comments in CSS files are parsed at build time
 * **Modular CSS Architecture** - Organized into separate files for buttons, cards, and utilities
 * **Hot Reload** - Documentation updates automatically when CSS files change
