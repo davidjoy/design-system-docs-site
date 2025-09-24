@@ -106,7 +106,15 @@ import './styles/utilities.css'
   padding-top: 6rem;
 }
 
-/* Mobile responsiveness */
+/* Tablet responsiveness - intermediate header height */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .app-main {
+    /* Slightly more padding for medium screens */
+    padding-top: 7rem;
+  }
+}
+
+/* Mobile responsiveness - header wraps significantly */
 @media (max-width: 768px) {
   .header-content {
     flex-direction: column;
@@ -130,8 +138,8 @@ import './styles/utilities.css'
 
   .app-main {
     padding: 1rem;
-    /* Adjust top padding for taller mobile header */
-    padding-top: 8rem;
+    /* Adjust top padding for taller mobile header (~180px) */
+    padding-top: 12rem;
   }
 }
 
