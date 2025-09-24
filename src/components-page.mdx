@@ -1,0 +1,160 @@
+import CssDoc from './components/CssDoc.vue'
+import LiveExample from './components/LiveExample.vue'
+
+# Components
+
+This page contains all the interactive components in our design system.
+
+## Button Components
+
+All button styles, variants, and size modifiers for interactive elements.
+
+<CssDoc filePath="src/styles/button.css" title="Button System" />
+
+### Live Button Examples
+
+<div class="example-section">
+  <h4>Button Variants</h4>
+  <div class="button-examples">
+    <button class="btn btn-primary">Primary Button</button>
+    <button class="btn btn-secondary">Secondary Button</button>
+    <button class="btn btn-danger">Danger Button</button>
+  </div>
+
+  <h4>Button Sizes</h4>
+  <div class="button-examples">
+    <button class="btn btn-primary btn-small">Small</button>
+    <button class="btn btn-primary">Default</button>
+    <button class="btn btn-primary btn-large">Large</button>
+  </div>
+
+  <h4>Mixed Examples</h4>
+  <div class="button-examples">
+    <button class="btn btn-secondary btn-small">Small Secondary</button>
+    <button class="btn btn-danger btn-large">Large Danger</button>
+  </div>
+</div>
+
+## Card Components
+
+Layout components for organizing and containing content in sections.
+
+<CssDoc filePath="src/styles/card.css" title="Card System" />
+
+### Live Card Examples
+
+<div class="example-section">
+  <h4>Basic Card</h4>
+  <div class="card">
+    <div class="card-header">
+      <h3>Basic Card Title</h3>
+    </div>
+    <div class="card-body">
+      <p>This is a basic card with a header and body. Cards are perfect for organizing content into digestible sections.</p>
+    </div>
+  </div>
+
+  <h4>Card with Footer</h4>
+  <div class="card">
+    <div class="card-header">
+      <h3>Complete Card</h3>
+    </div>
+    <div class="card-body">
+      <p>This card demonstrates all three sections: header, body, and footer. The footer is great for actions or metadata.</p>
+    </div>
+    <div class="card-footer">
+      <button class="btn btn-primary">Take Action</button>
+      <button class="btn btn-secondary">Cancel</button>
+    </div>
+  </div>
+
+  <h4>Card Variants</h4>
+  <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+    <div class="card" style="flex: 1; min-width: 250px;">
+      <div class="card-header">
+        <h3>Standard Card</h3>
+      </div>
+      <div class="card-body">
+        <p>Regular card with default styling and shadow.</p>
+      </div>
+    </div>
+
+    <div class="card card-elevated" style="flex: 1; min-width: 250px;">
+      <div class="card-header">
+        <h3>Elevated Card</h3>
+      </div>
+      <div class="card-body">
+        <p>Elevated card with stronger shadow and slight lift effect.</p>
+      </div>
+    </div>
+  </div>
+
+  <h4>Compact Card</h4>
+  <div class="card card-compact" style="max-width: 300px;">
+    <div class="card-header">
+      <h3>Compact Card</h3>
+    </div>
+    <div class="card-body">
+      <p>Compact card with reduced padding for tighter layouts.</p>
+    </div>
+    <div class="card-footer">
+      <button class="btn btn-primary btn-small">Action</button>
+    </div>
+  </div>
+</div>
+
+<style>
+{`
+.example-section {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  border: 1px solid #e1e5e9;
+  border-radius: 8px;
+  background: #fafbfc;
+}
+
+.example-section h4 {
+  color: #2c3e50;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #3498db;
+  font-size: 1.1rem;
+}
+
+.example-section h4:first-child {
+  margin-top: 0;
+}
+
+.button-examples {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.button-examples:last-child {
+  margin-bottom: 0;
+}
+
+.card {
+  margin-bottom: 1.5rem;
+}
+
+.card:last-child {
+  margin-bottom: 0;
+}
+
+/* Ensure card headers in examples don't get too large */
+.example-section .card h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+/* Add some visual separation */
+.example-section > *:not(:last-child) {
+  margin-bottom: 1.5rem;
+}
+`}
+</style>

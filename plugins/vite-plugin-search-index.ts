@@ -27,12 +27,14 @@ function parseMDXContent(content: string, filePath: string): SearchIndexEntry[] 
   const titleMatch = content.match(/^#\s+(.+)/m)
   const pageTitle = titleMatch ? titleMatch[1] : filePath.replace(/.*\//, '').replace('.mdx', '')
 
-  // Create main page entry - use relative URLs that work with base path
+  // Create main page entry - use proper page URLs
   const pageUrl = filePath.replace('src/', '').replace('.mdx', '')
+  const isMainPage = pageUrl === 'design-system-documentation'
+
   entries.push({
     id: `page-${filePath}`,
     title: pageTitle,
-    url: pageUrl,
+    url: isMainPage ? '' : pageUrl, // Main page gets empty URL, others get their path
     type: 'page',
     content: content.replace(/[#*`]/g, '').substring(0, 300), // Clean content preview
     keywords: extractKeywords(content)
@@ -53,7 +55,7 @@ function parseMDXContent(content: string, filePath: string): SearchIndexEntry[] 
     entries.push({
       id: `heading-${filePath}-${heading.toLowerCase().replace(/\s+/g, '-')}`,
       title: heading,
-      url: `${pageUrl}#${heading.toLowerCase().replace(/\s+/g, '-')}`,
+      url: isMainPage ? `#${heading.toLowerCase().replace(/\s+/g, '-')}` : `${pageUrl}#${heading.toLowerCase().replace(/\s+/g, '-')}`,
       type: 'heading',
       content: heading,
       keywords: extractKeywords(heading),
@@ -71,13 +73,13 @@ function parseMDXContent(content: string, filePath: string): SearchIndexEntry[] 
       seenComponents.add(componentName)
 
       // Try to find a relevant section for this component
-      let componentUrl = pageUrl
+      let componentUrl = isMainPage ? '' : pageUrl
       if (componentName === 'CssDoc') {
-        componentUrl = `${pageUrl}#button-components` // First CssDoc usage
+        componentUrl = isMainPage ? '#button-components' : `${pageUrl}#button-components`
       } else if (componentName === 'LiveExample') {
-        componentUrl = `${pageUrl}#live-code-examples`
+        componentUrl = isMainPage ? '#live-code-examples' : `${pageUrl}#live-code-examples`
       } else if (componentName === 'HelloWorld') {
-        componentUrl = pageUrl // Just go to top of page
+        componentUrl = isMainPage ? '' : pageUrl
       }
 
       entries.push({
@@ -136,7 +138,16 @@ function integrateCSSDocsData(cssDocsPath: string): SearchIndexEntry[] {
         for (const doc of docs as any[]) {
           if (doc.selector) {
             const { section, anchor } = getCSSSection(filePath, doc.selector)
-            const cssUrl = `design-system-documentation#${anchor}`
+
+            // Determine which page the CSS class should link to based on the file
+            let cssUrl = `#${anchor}` // Default to main page
+            if (filePath.includes('button.css') || filePath.includes('card.css')) {
+              // Button and card CSS classes go to components page
+              cssUrl = `components-page#${anchor}`
+            } else if (filePath.includes('utilities.css')) {
+              // Utility classes go to utilities page
+              cssUrl = `utilities#${anchor}`
+            }
 
             entries.push({
               id: `css-${filePath}-${doc.selector}`,

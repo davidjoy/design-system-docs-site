@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import DesignSystemDocumentation from './design-system-documentation.mdx'
 import SearchBox from './components/SearchBox.vue'
 import './styles/button.css'
 import './styles/card.css'
@@ -10,13 +9,15 @@ import './styles/utilities.css'
   <div class="app">
     <header class="app-header">
       <div class="header-content">
-        <h1 class="site-title">Design System Documentation</h1>
+        <h1 class="site-title">
+          <router-link to="/" class="site-title-link">Design System Documentation</router-link>
+        </h1>
         <SearchBox />
       </div>
     </header>
 
     <main class="app-main">
-      <DesignSystemDocumentation />
+      <router-view />
     </main>
   </div>
 </template>
@@ -53,6 +54,17 @@ import './styles/utilities.css'
   font-size: 1.5rem;
   color: #2c3e50;
   font-weight: 600;
+}
+
+.site-title-link {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.site-title-link:hover {
+  color: #646cff;
+  text-decoration: none;
 }
 
 .app-main {

@@ -1,0 +1,71 @@
+import CssDoc from './components/CssDoc.vue'
+
+# Utility Classes
+
+Helper classes for spacing, alignment, display, and layout control.
+
+## Overview
+
+Utility classes provide single-purpose styling that can be applied to any element. They follow a consistent naming convention and are designed to be composable.
+
+## Available Utilities
+
+<CssDoc filePath="src/styles/utilities.css" title="Utility Classes" />
+
+## Usage Examples
+
+### Spacing
+
+Use margin and padding utilities to control spacing:
+
+```html
+<!-- Margin utilities -->
+<div class="m-1">Margin on all sides</div>
+<div class="mt-2">Margin top</div>
+<div class="mb-3">Margin bottom</div>
+
+<!-- Padding utilities -->
+<div class="p-2">Padding on all sides</div>
+<div class="px-3">Horizontal padding</div>
+<div class="py-1">Vertical padding</div>
+```
+
+### Display
+
+Control element display behavior:
+
+```html
+<!-- Display utilities -->
+<div class="d-block">Block display</div>
+<div class="d-inline">Inline display</div>
+<div class="d-flex">Flex display</div>
+<div class="d-none">Hidden element</div>
+```
+
+### Text Alignment
+
+Align text content:
+
+```html
+<!-- Text alignment -->
+<p class="text-left">Left aligned text</p>
+<p class="text-center">Center aligned text</p>
+<p class="text-right">Right aligned text</p>
+```
+
+### Responsive Design
+
+Many utilities include responsive variants:
+
+```html
+<!-- Responsive utilities -->
+<div class="d-none d-md-block">Hidden on mobile, visible on desktop</div>
+<div class="text-center text-md-left">Centered on mobile, left on desktop</div>
+```
+
+## Best Practices
+
+1. **Compose utilities** rather than creating custom CSS when possible
+2. **Use consistent spacing** with the predefined scale
+3. **Leverage responsive variants** for mobile-first design
+4. **Combine with component classes** for maximum flexibility

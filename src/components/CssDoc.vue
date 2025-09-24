@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 
 interface CssDocComment {
   description: string
@@ -55,7 +55,8 @@ const getSelectorId = (selector: string): string => {
   return selector.replace(/[^a-zA-Z0-9-]/g, '').toLowerCase()
 }
 
-onMounted(async () => {
+// Function to fetch CSS documentation for the current file path
+const fetchDocs = async () => {
   try {
     // Fetch the pre-generated documentation data - use base URL for GitHub Pages compatibility
     const baseUrl = import.meta.env.BASE_URL || '/'
@@ -71,7 +72,13 @@ onMounted(async () => {
     console.error(`Error loading CSS documentation for ${props.filePath}:`, error)
     docs.value = []
   }
-})
+}
+
+// Fetch docs on mount
+onMounted(fetchDocs)
+
+// Watch for changes to filePath prop and refetch docs
+watch(() => props.filePath, fetchDocs)
 </script>
 
 <style scoped>

@@ -53,6 +53,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, nextTick } from 'vue'
+import { useRouter } from 'vue-router'
 import Fuse from 'fuse.js'
 
 interface SearchIndexEntry {
@@ -73,6 +74,8 @@ interface SearchIndex {
     types: Record<string, number>
   }
 }
+
+const router = useRouter()
 
 const searchQuery = ref('')
 const searchInput = ref<HTMLInputElement>()
@@ -204,12 +207,46 @@ const handleBlur = () => {
 }
 
 const selectResult = (item: SearchIndexEntry) => {
-  // Navigate to the selected result using relative navigation for GitHub Pages compatibility
-  const baseUrl = import.meta.env.BASE_URL || '/'
-  const fullUrl = item.url.startsWith('/') ? `${baseUrl}${item.url.slice(1)}` : item.url
-  window.location.href = fullUrl
   showResults.value = false
   searchQuery.value = ''
+
+  // Handle different URL types
+  if (!item.url || item.url === '') {
+    // Main page - navigate to home and scroll to top
+    router.push('/').then(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    })
+  } else if (item.url.startsWith('#')) {
+    // Anchor link on current page
+    window.location.hash = item.url
+  } else if (item.url.includes('#')) {
+    // Different page with anchor
+    const [path, hash] = item.url.split('#')
+    router.push({
+      path: `/${path}`,
+      hash: `#${hash}`
+    }).then(() => {
+      // Wait for the page and components to load, then try to scroll to the element
+      let attempts = 0
+      const maxAttempts = 10 // Try for up to 2 seconds
+
+      const attemptScroll = () => {
+        const element = document.getElementById(hash)
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' })
+        } else if (attempts < maxAttempts) {
+          attempts++
+          setTimeout(attemptScroll, 200)
+        }
+      }
+
+      // Start attempting to scroll after navigation
+      setTimeout(attemptScroll, 100)
+    })
+  } else {
+    // Different page without anchor
+    router.push(`/${item.url}`)
+  }
 }
 
 const getTypeIcon = (type: string): string => {
