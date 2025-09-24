@@ -1,13 +1,47 @@
 import CssDoc from './components/CssDoc.vue'
 import HelloWorld from './components/HelloWorld.vue'
+import LiveExample from './components/LiveExample.vue'
 
 # Design System Documentation
+
+| Why | What |
+:--- | :---
+| Cause | I'm a table demonstrating Github Markdown. |
+| That's great! | I know. |
 
 This page demonstrates how to extract and display CSS documentation in MDX files.
 
 It also demonstrates that embedding Vue components in mdx works.  Here's a counter button:
 
 <HelloWorld />
+
+## Live Code Examples
+
+Here's a simple live example you can edit:
+
+<LiveExample
+  title="Basic HTML Example"
+  dataScope={{ Date }}
+  code={`<template>
+  <div>
+    <h3>Hello from Vue Live!</h3>
+    <p>Current time: {{ new Date().toLocaleTimeString() }}</p>
+    <button @click="count++" class="btn btn-primary">
+      Clicked {{ count }} times
+    </button>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      count: 0
+    }
+  }
+}
+</script>`}
+/>
 
 ## Button Components
 

@@ -9,15 +9,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@mdx-js/rollup": "^3.1.0",
-    "vue": "^3.5.17"
+    "vue": "^3.5.17",
+    "vue-live": "^2.5.4"
   },
   "devDependencies": {
+    "@mdx-js/rollup": "^3.1.0",
+    "@types/glob": "^8.1.0",
+    "@types/node": "^20.0.0",
     "@vitejs/plugin-vue": "^6.0.0",
     "@vue/tsconfig": "^0.7.0",
-    "@types/node": "^20.0.0",
     "glob": "^10.3.10",
-    "@types/glob": "^8.1.0",
+    "remark-gfm": "^4.0.1",
     "typescript": "~5.8.3",
     "vite": "^7.0.4",
     "vue-tsc": "^2.2.12"

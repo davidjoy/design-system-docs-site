@@ -2,6 +2,8 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import mdx from '@mdx-js/rollup'
 import cssDocsPlugin from './plugins/vite-plugin-css-docs'
+import remarkGfm from 'remark-gfm'
+
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -9,7 +11,7 @@ export default defineConfig({
     vue(),
     mdx({
       jsxImportSource: 'vue',
-      remarkPlugins: [],
+      remarkPlugins: [remarkGfm],
       rehypePlugins: []
     }),
     cssDocsPlugin({
