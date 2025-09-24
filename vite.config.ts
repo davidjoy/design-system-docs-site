@@ -7,6 +7,10 @@ import remarkGfm from 'remark-gfm'
 
 // https://vite.dev/config/
 export default defineConfig({
+  // Set base path for GitHub Pages deployment
+  // Replace 'design-system-docs-site' with your actual repository name
+  base: process.env.NODE_ENV === 'production' ? '/design-system-docs-site/' : '/',
+
   plugins: [
     vue(),
     mdx({
