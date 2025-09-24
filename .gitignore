@@ -16,6 +16,9 @@ dist-ssr
 public/css-docs.json
 public/search-index.json
 
+# Generated Vue wrapper pages for MDX files
+src/generated-pages/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

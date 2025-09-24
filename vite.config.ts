@@ -3,6 +3,7 @@ import vue from '@vitejs/plugin-vue'
 import mdx from '@mdx-js/rollup'
 import cssDocsPlugin from './plugins/vite-plugin-css-docs'
 import searchIndexPlugin from './plugins/vite-plugin-search-index'
+import mdxPagesPlugin from './plugins/vite-plugin-mdx-pages'
 import remarkGfm from 'remark-gfm'
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
@@ -15,6 +16,7 @@ export default defineConfig({
   base: process.env.NODE_ENV === 'production' ? '/design-system-docs-site/' : '/',
 
   plugins: [
+    mdxPagesPlugin(), // Generate Vue wrappers for MDX files
     vue(),
     mdx({
       jsxImportSource: 'vue',

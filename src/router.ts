@@ -1,20 +1,23 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import HomePage from './generated-pages/HomePage.vue'
+import ComponentsPage from './generated-pages/ComponentsPage.vue'
+import UtilitiesPage from './generated-pages/UtilitiesPage.vue'
 
 const routes = [
   {
     path: '/',
     name: 'Home',
-    component: () => import('./design-system-documentation.mdx')
+    component: HomePage
   },
   {
     path: '/components-page',
     name: 'Components',
-    component: () => import('./components-page.mdx')
+    component: ComponentsPage
   },
   {
     path: '/utilities',
     name: 'Utilities',
-    component: () => import('./utilities.mdx')
+    component: UtilitiesPage
   }
 ]
 
