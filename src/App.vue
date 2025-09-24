@@ -12,6 +12,10 @@ import './styles/utilities.css'
         <h1 class="site-title">
           <router-link to="/" class="site-title-link">Design System Documentation</router-link>
         </h1>
+        <nav class="header-nav">
+          <router-link to="/components-page" class="nav-link">Components</router-link>
+          <router-link to="/utilities" class="nav-link">Utilities</router-link>
+        </nav>
         <SearchBox />
       </div>
     </header>
@@ -67,6 +71,33 @@ import './styles/utilities.css'
   text-decoration: none;
 }
 
+.header-nav {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.nav-link {
+  color: #2c3e50;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.nav-link:hover {
+  color: #646cff;
+  background-color: rgba(100, 108, 255, 0.1);
+  text-decoration: none;
+}
+
+.nav-link.router-link-active {
+  color: #646cff;
+  background-color: rgba(100, 108, 255, 0.15);
+  font-weight: 600;
+}
+
 .app-main {
   max-width: 1280px;
   margin: 0 auto;
@@ -88,8 +119,19 @@ import './styles/utilities.css'
     font-size: 1.25rem;
   }
 
+  .header-nav {
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .nav-link {
+    padding: 0.75rem 1.5rem;
+  }
+
   .app-main {
     padding: 1rem;
+    /* Adjust top padding for taller mobile header */
+    padding-top: 8rem;
   }
 }
 
