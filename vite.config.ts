@@ -2,7 +2,10 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import mdx from '@mdx-js/rollup'
 import cssDocsPlugin from './plugins/vite-plugin-css-docs'
+import searchIndexPlugin from './plugins/vite-plugin-search-index'
 import remarkGfm from 'remark-gfm'
+import rehypeSlug from 'rehype-slug'
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 
 
 // https://vite.dev/config/
@@ -16,12 +19,21 @@ export default defineConfig({
     mdx({
       jsxImportSource: 'vue',
       remarkPlugins: [remarkGfm],
-      rehypePlugins: []
+      rehypePlugins: [
+        rehypeSlug,
+        [rehypeAutolinkHeadings, { behavior: 'wrap' }]
+      ]
     }),
     cssDocsPlugin({
       include: ['src/**/*.css', 'src/**/*.scss', 'src/styles/**/*.css'],
       outputDir: 'public',
       outputFile: 'css-docs.json'
+    }),
+    searchIndexPlugin({
+      include: ['src/**/*.mdx'],
+      outputDir: 'public',
+      outputFile: 'search-index.json',
+      cssDocsPath: 'public/css-docs.json'
     })
   ],
   resolve: {

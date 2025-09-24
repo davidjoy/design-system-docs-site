@@ -6,7 +6,7 @@
     </div>
     <div v-for="(doc, index) in docs" :key="index" class="doc-section">
       <div class="doc-header">
-        <h4 v-if="doc.selector" class="selector">{{ doc.selector }}</h4>
+        <h4 v-if="doc.selector" :id="getSelectorId(doc.selector)" class="selector">{{ doc.selector }}</h4>
         <span v-if="doc.deprecated" class="deprecated">Deprecated</span>
         <span v-if="doc.since" class="since">Since: {{ doc.since }}</span>
       </div>
@@ -50,10 +50,16 @@ interface Props {
 const props = defineProps<Props>()
 const docs = ref<CssDocComment[]>([])
 
+// Helper function to create anchor IDs from CSS selectors
+const getSelectorId = (selector: string): string => {
+  return selector.replace(/[^a-zA-Z0-9-]/g, '').toLowerCase()
+}
+
 onMounted(async () => {
   try {
-    // Fetch the pre-generated documentation data
-    const response = await fetch('/css-docs.json')
+    // Fetch the pre-generated documentation data - use base URL for GitHub Pages compatibility
+    const baseUrl = import.meta.env.BASE_URL || '/'
+    const response = await fetch(`${baseUrl}css-docs.json`)
     if (response.ok) {
       const allDocs = await response.json()
       docs.value = allDocs[props.filePath] || []

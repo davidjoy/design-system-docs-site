@@ -38,6 +38,23 @@ h1 {
   line-height: 1.1;
 }
 
+/* Auto-generated heading anchor links */
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover {
+  opacity: 0.8;
+}
+
+/* Smooth scrolling for anchor navigation */
+html {
+  scroll-behavior: smooth;
+  /* Add padding to account for sticky header when scrolling to anchors */
+  scroll-padding-top: 100px;
+}
+
 button {
   border-radius: 8px;
   border: 1px solid transparent;
