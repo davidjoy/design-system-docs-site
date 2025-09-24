@@ -30,8 +30,10 @@ import './styles/utilities.css'
   background: white;
   border-bottom: 1px solid #e1e5e9;
   padding: 1rem 0;
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 100;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -57,6 +59,8 @@ import './styles/utilities.css'
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
+  /* Add top padding to account for fixed header */
+  padding-top: 6rem;
 }
 
 /* Mobile responsiveness */

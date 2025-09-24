@@ -16,11 +16,13 @@
     </div>
 
     <div
-      v-if="showResults && searchQuery.length > 1 && results.length > 0"
+      v-if="showResults && searchQuery.length > 1"
       ref="searchResults"
       class="search-results"
     >
-      <div v-if="loading" class="search-loading">Searching...</div>
+      <div v-if="loading" class="search-loading">
+        <span class="loading-spinner">🔍</span> Searching for "{{ searchQuery }}"...
+      </div>
 
       <div v-else-if="results.length === 0" class="search-no-results">
         No results found for "{{ searchQuery }}"
@@ -50,7 +52,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, nextTick } from 'vue'
+import { ref, onMounted, onUnmounted, nextTick } from 'vue'
 import Fuse from 'fuse.js'
 
 interface SearchIndexEntry {
@@ -114,31 +116,50 @@ onMounted(async () => {
   }
 })
 
+onUnmounted(() => {
+  // Clear any pending search timeout
+  if (searchTimeout) {
+    clearTimeout(searchTimeout)
+  }
+})
 
-const handleSearch = async () => {
+
+
+let searchTimeout: number | null = null
+
+const handleSearch = () => {
+  // Clear existing timeout
+  if (searchTimeout) {
+    clearTimeout(searchTimeout)
+  }
+
+  // If query is too short, clear immediately
   if (!fuse.value || searchQuery.value.length < 2) {
     results.value = []
     showResults.value = false
+    loading.value = false
     return
   }
 
-  loading.value = true
+  // Show dropdown immediately with loading state
   showResults.value = true
+  loading.value = true
+  results.value = [] // Clear previous results
 
-  // Add small delay to debounce search
-  await new Promise(resolve => setTimeout(resolve, 150))
-
-  try {
-    const searchResults = fuse.value.search(searchQuery.value)
-    results.value = searchResults.slice(0, 8) // Limit to 8 results
-    selectedIndex.value = -1
-  } catch (error) {
-    console.error('Search error:', error)
-    results.value = []
-    showResults.value = false
-  } finally {
-    loading.value = false
-  }
+  // Debounce the search
+  searchTimeout = window.setTimeout(async () => {
+    try {
+      const searchResults = fuse.value!.search(searchQuery.value)
+      results.value = searchResults.slice(0, 8) // Limit to 8 results
+      selectedIndex.value = -1
+    } catch (error) {
+      console.error('Search error:', error)
+      results.value = []
+      showResults.value = false
+    } finally {
+      loading.value = false
+    }
+  }, 200)
 }
 
 const handleKeydown = (event: KeyboardEvent) => {
@@ -155,8 +176,11 @@ const handleKeydown = (event: KeyboardEvent) => {
       break
     case 'Enter':
       event.preventDefault()
-      if (selectedIndex.value >= 0) {
+      if (selectedIndex.value >= 0 && results.value[selectedIndex.value]) {
         selectResult(results.value[selectedIndex.value].item)
+      } else if (results.value.length > 0) {
+        // If no item selected but results exist, select the first one
+        selectResult(results.value[0].item)
       }
       break
     case 'Escape':
@@ -228,8 +252,6 @@ defineExpose({
   position: relative;
   width: 100%;
   max-width: 500px;
-  /* Prevent layout shifts when dropdown appears */
-  contain: layout;
 }
 
 .search-input-wrapper {
@@ -282,6 +304,16 @@ defineExpose({
   text-align: center;
   color: #666;
   font-style: italic;
+}
+
+.search-loading .loading-spinner {
+  display: inline-block;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
 }
 
 .search-results-list {
