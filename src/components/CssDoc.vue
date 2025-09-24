@@ -53,7 +53,7 @@ const docs = ref<CssDocComment[]>([])
 onMounted(async () => {
   try {
     // Fetch the pre-generated documentation data
-    const response = await fetch('/src/generated/css-docs.json')
+    const response = await fetch('/css-docs.json')
     if (response.ok) {
       const allDocs = await response.json()
       docs.value = allDocs[props.filePath] || []

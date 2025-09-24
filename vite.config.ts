@@ -20,7 +20,7 @@ export default defineConfig({
     }),
     cssDocsPlugin({
       include: ['src/**/*.css', 'src/**/*.scss', 'src/styles/**/*.css'],
-      outputDir: 'src/generated',
+      outputDir: 'public',
       outputFile: 'css-docs.json'
     })
   ],
