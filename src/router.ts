@@ -16,7 +16,7 @@ const routes = [
   },
   {
     path: '/utilities',
-    name: 'Utilities', 
+    name: 'Utilities',
     component: Utilities
   }
 ]
